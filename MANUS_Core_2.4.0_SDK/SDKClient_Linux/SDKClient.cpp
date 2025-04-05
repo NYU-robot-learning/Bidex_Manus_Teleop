@@ -608,15 +608,15 @@ ClientReturnCode SDKClient::InitializeSDK()
 	// (each client can have their own settings. unreal and unity for instance use different coordinate systems)
 	// if this is not set, the SDK will not connect to any Manus core host.
 	// The coordinate system used for this example is z-up, x-positive, right-handed and in meter scale.
-	CoordinateSystemVUH t_VUH;
-	CoordinateSystemVUH_Init(&t_VUH);
-	t_VUH.handedness = Side::Side_Left;
-	t_VUH.up = AxisPolarity::AxisPolarity_PositiveY;
-	t_VUH.view = AxisView::AxisView_ZFromViewer;
-	t_VUH.unitScale = 1.0f; //1.0 is meters, 0.01 is cm, 0.001 is mm.
+	// CoordinateSystemVUH t_VUH;
+	// CoordinateSystemVUH_Init(&t_VUH);
+	// t_VUH.handedness = Side::Side_Left;
+	// t_VUH.up = AxisPolarity::AxisPolarity_PositiveY;
+	// t_VUH.view = AxisView::AxisView_ZFromViewer;
+	// t_VUH.unitScale = 1.0f; //1.0 is meters, 0.01 is cm, 0.001 is mm.
 
-	// The above specified coordinate system is used to initialize and the coordinate space is specified (world/local).
-	const SDKReturnCode t_CoordinateResult = CoreSdk_InitializeCoordinateSystemWithVUH(t_VUH, true);
+	// // The above specified coordinate system is used to initialize and the coordinate space is specified (world/local).
+	// const SDKReturnCode t_CoordinateResult = CoreSdk_InitializeCoordinateSystemWithVUH(t_VUH, true);
 
 	/* this is an example if you want to use the other coordinate system instead of VUH (view, up, handedness)
 	CoordinateSystemDirection t_Direction;
@@ -625,6 +625,13 @@ ClientReturnCode SDKClient::InitializeSDK()
 	t_Direction.z = AxisDirection::AD_Forward;
 	const SDKReturnCode t_InitializeResult = CoreSdk_InitializeCoordinateSystemWithDirection(t_Direction, true);
 	*/
+
+	CoordinateSystemDirection t_Direction;
+    t_Direction.x = AxisDirection::AxisDirection_Right;
+    t_Direction.y = AxisDirection::AxisDirection_Up;
+    t_Direction.z = AxisDirection::AxisDirection_Backward;
+    t_Direction.unitScale = 0.01f;
+    const SDKReturnCode t_CoordinateResult = CoreSdk_InitializeCoordinateSystemWithDirection(t_Direction, true);
 
 	if (t_CoordinateResult != SDKReturnCode::SDKReturnCode_Success)
 	{
